@@ -345,6 +345,38 @@ Visit the URL above or run firebase open
 
 ##10 Send Messages
 
+###Implement Message Sending
+
+In this section you will add the ability for users to send messages. The code snippet below is triggered upon clicks on the ***SEND*** button and pushes a message object with the contents of the message field to the Firebase database. The ```push()``` method adds an automatically generated key to the pushed object's path. These keys are sequential which ensures that the new messages will be added to the end of the list. Update the ```FriendlyChat.prototype.saveMessage``` function in scripts/main.js with:
+
+```javascript
+// Saves a new message on the Firebase DB.
+FriendlyChat.prototype.saveMessage = function(e) {
+  e.preventDefault();
+  // Check that the user entered a message and is signed in.
+  if (this.messageInput.value && this.checkSignedInWithMessage()) {
+    var currentUser = this.auth.currentUser;
+    // Add a new message entry to the Firebase Database.
+    this.messagesRef.push({
+      name: currentUser.displayName,
+      text: this.messageInput.value,
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+    }).then(function() {
+      // Clear message text field and SEND button state.
+      FriendlyChat.resetMaterialTextfield(this.messageInput);
+      this.toggleButton();
+    }.bind(this)).catch(function(error) {
+      console.error('Error writing new message to Firebase Database', error);
+    });
+  }
+};
+```
+
+###Test Sending Messages
+
+1. Reload your app if it is still being served or run ```firebase serve``` on the command line to start serving the app from [http://localhost:5000](http://localhost:5000) and open it in your browser.
+
+2. After signing-in, enter a message and hit the send button, the new message should be visible in the app UI and in the Firebase console with your user photo and name.
 
 ##11 Send Images
 
