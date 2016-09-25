@@ -64,7 +64,7 @@ You will find an HTML/JavaScript snippet:
     apiKey: "AIzaSyDEdtLnRcCRuTpyKLbkgbCG6_BUSRCyr60",
     authDomain: "friendlychat-a29c5.firebaseapp.com",
     databaseURL: "https://friendlychat-a29c5.firebaseio.com",
-    storageBucket: "",
+    storageBucket: "friendlychat-a29c5.appspot.com",
     messagingSenderId: "1008728266001"
   };
   firebase.initializeApp(config);
