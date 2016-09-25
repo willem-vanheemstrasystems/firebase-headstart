@@ -132,6 +132,16 @@ Then select your Project ID and follow the instructions.
 
 ##6 Run the starter app
 
+Now that you have imported and configured your project you are ready to run the app for the first time. Open a console at the ```web-start``` folder and run:
+
+```javascript
+$web-start> firebase serve
+Listening at http://localhost:5000
+```
+
+The web app should now be served from [http://localhost:5000](http://localhost:5000/) open it. You should see your app's not (yet!) functioning UI.
+
+The app cannot do anything right now but with your help it will soon! We only have laid out the UI for you so far. Let's now build a realtime chat!
 
 ##7 User Sign-in
 
