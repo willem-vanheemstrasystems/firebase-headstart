@@ -46,7 +46,51 @@ Open the starter app:
 
 ##4 Create a Firebase project and Setup your app
 
+###Create project
 
+In the [Firebase console](https://console.firebase.google.com/) click on ***CREATE NEW PROJECT*** and call it ***FriendlyChat***.
+
+###Initialize your app
+
+In the Firebase Console, in the ***Overview*** click the ***Add Firebase to your web app** button.
+
+You will find an HTML/JavaScript snippet:
+
+```javascript
+<script src="https://www.gstatic.com/firebasejs/3.4.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyDEdtLnRcCRuTpyKLbkgbCG6_BUSRCyr60",
+    authDomain: "friendlychat-a29c5.firebaseapp.com",
+    databaseURL: "https://friendlychat-a29c5.firebaseio.com",
+    storageBucket: "",
+    messagingSenderId: "1008728266001"
+  };
+  firebase.initializeApp(config);
+</script>
+```
+___
+
+Warning!
+
+If your ```storageBucket``` attribute is empty like this:
+
+```javascript
+    databaseURL: "https://friendlychat-a29c5.firebaseio.com",
+    storageBucket: "",
+```
+
+You've hit a bug. Sorry about that! Close and re-open this dialog and your ```storageBucket``` should now be populated.
+___
+
+Copy this snippet and paste it at the bottom of the ```index.html``` file where the ```TODO``` is located. This imports the Firebase JavaScript SDK and initializes it for your Firebase Project.
+
+##Enable Google Auth
+
+To sign users in we'll use Google auth which needs to be enabled.
+
+In the ***Auth*** section > ***SIGN IN METHOD*** tab you need to enable the ***Google*** Sign-in Provider and click ***SAVE***.
 
 ##5 Install the Firebase Command Line Interface
 
