@@ -212,7 +212,17 @@ FriendlyChat.prototype.checkSignedInWithMessage = function() {
   ...
 ```
 
+###Test Signing-in to the app.
 
+1. Reload your app if it is still being served or run ```firebase serve``` on the command line to start serving the app from [http://localhost:5000](http://localhost:5000/) and open it in your browser.
+
+2. Sign-In using the Sign In button
+
+3. After Signing in the profile pic and name of the user should be displayed
+
+NOTE: You might get this error message in your web browser's console: The given sign-in provider is disabled for this Firebase project. Enable it in the Firebase console, under the sign-in method tab of the Auth section.
+
+In our case we had to 'enable' Google as the sign-in provider.
 
 ##8 Read messages
 
