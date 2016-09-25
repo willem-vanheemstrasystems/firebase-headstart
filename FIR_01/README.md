@@ -226,6 +226,57 @@ In our case we had to 'enable' Google as the sign-in provider.
 
 ##8 Read messages
 
+###Import Messages
+
+In your project in Firebase console visit the ***Database*** section on the left navigation bar. In the overflow menu of the Database select ***Import JSON***. Browse to the ```initial_messages.json``` file in the starter directory, select it then click the ***Import*** button. This will replace any data currently in your database. You could also edit the database directly, using the green + and red x to add and remove items manually.
+
+After importing the JSON file your database should contain the following elements:
+
+```javascript
+friendlychat-12345/
+    messages/
+        -K2ib4H77rj0LYewF7dP/
+            text: "Hello"
+            name: "anonymous"
+        -K2ib5JHRbbL0NrztUfO/
+            text: "How are you"
+            name: "anonymous"
+        -K2ib62mjHh34CAUbide/
+            text: "I am fine"
+            name: "anonymous"
+```
+
+These are a few sample chat messages to get us started with reading from the Database.
+
+###Synchronize Messages
+
+To synchronize messages on the app we'll need to add listeners that triggers when changes are made to the data and then create a UI element that show new messages.
+
+Add code that listens to newly added messages to the app's UI. To do this modify the ```FriendlyChat.prototype.loadMessages``` function. This is where we'll register the listeners that listens to changes made to the data. We'll only display the last 12 messages of the chat to avoid displaying a very long history on load.
+
+```javascript
+// Loads chat messages history and listens for upcoming ones.
+FriendlyChat.prototype.loadMessages = function() {
+  // Reference to the /messages/ database path.
+  this.messagesRef = this.database.ref('messages');
+  // Make sure we remove all previous listeners.
+  this.messagesRef.off();
+
+  // Loads the last 12 messages and listen for new ones.
+  var setMessage = function(data) {
+    var val = data.val();
+    this.displayMessage(data.key, val.name, val.text, val.photoUrl, val.imageUrl);
+  }.bind(this);
+  this.messagesRef.limitToLast(12).on('child_added', setMessage);
+  this.messagesRef.limitToLast(12).on('child_changed', setMessage);
+};
+```
+
+###Test Message Sync
+
+1. Reload your app if it is still being served or run ```firebase serve``` on the command line to start serving the app from [http://localhost:5000](http://localhost:5000) and open it in your browser.
+
+2. The sample messages we imported earlier into the database should be displayed in the Friendly-Chat UI. You can also manually add new messages directly from the ***Database*** section of the Firebase console. Congratulations, you are reading real-time database entries in your app!
 
 ##9 Database Security Rules [Optional]
 
