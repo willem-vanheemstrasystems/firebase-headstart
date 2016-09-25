@@ -94,6 +94,41 @@ In the ***Auth*** section > ***SIGN IN METHOD*** tab you need to enable the ***G
 
 ##5 Install the Firebase Command Line Interface
 
+The Firebase Command Line Interface (CLI) will allow you to serve your web apps locally and deploy your web app to Firebase hosting.
+
+To install the CLI you need to have installed [npm](https://www.npmjs.com/) which typically comes with [NodeJS](https://nodejs.org/en/).
+
+To install the CLI run the following npm command:
+
+```javascript
+$~> npm -g install firebase-tools
+```
+___
+Doesn't work? You may need to [change npm permissions](https://docs.npmjs.com/getting-started/fixing-npm-permissions).
+___
+
+To verify that the CLI has been installed correctly open a console and run:
+
+```javascript
+$~> firebase version
+3.x.x
+```
+
+Make sure the Firebase version is 3.x.x. If this reads 2.x.x you still have an older firebase CLI version installed and you may need to fix your PATH.
+
+Authorize the Firebase CLI by running:
+
+```javascript
+$~> firebase login
+```
+
+Make sure you are in the ```web-start``` directory then set up the Firebase CLI to use your Firebase Project:
+
+```javascript
+$~> firebase use --add
+```
+
+Then select your Project ID and follow the instructions.
 
 ##6 Run the starter app
 
