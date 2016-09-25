@@ -280,6 +280,68 @@ FriendlyChat.prototype.loadMessages = function() {
 
 ##9 Database Security Rules [Optional]
 
+###Set Database Security Rules
+
+The Firebase Realtime Database uses a specific [rules language](https://firebase.google.com/docs/database/security/) to define access rights, security and data validations.
+
+New Firebase Projects are setup with default rules that only allow authenticated users to use the Realtime Database. You can view and modifies these rules in the ***Database*** section of [Firebase console](https://console.firebase.google.com/) under the ***RULES*** tab. You should be seeing the default rules: 
+
+```javascript
+{
+  "rules": {
+    ".read": "auth != null",
+    ".write": "auth != null"
+  }
+}
+```
+
+The ```auth``` rule variable is a special variable containing information about the user if authenticated. More information can be found in the [documentation](https://firebase.google.com/docs/database/security/).
+
+You can update these rules manually directly in the Firebase console. Alternatively you can write these rules in a file and apply them to your project using the CLI:
+
+- Save the rules shown above in a file named ```database-rules.json```.
+
+- In your ```firebase.json``` file, add a ```database.rules``` attribute pointing to a JSON file containing the rules shown above (the ```hosting``` attribute should already be there):
+
+```javascript
+{
+  "database": {
+    "rules": "database-rules.json"
+  },
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "database-rules.json",
+      "storage.rules"
+    ]
+  }
+}
+```
+
+###Deploy Database Security Rules
+
+You can then deploy these rules with the Firebase CLI using:
+
+```javascript
+$web-start> firebase deploy
+
+=== Deploying to 'friendlychat-a29c5'...
+
+i  deploying database, hosting
++  database: rules ready to deploy.
+i  hosting: preparing ./ directory for upload...
++  hosting: ./ folder uploaded successfully
++  hosting: 8 files uploaded successfully
+i  starting release process (may take several minutes)...
+
++  Deploy complete!
+
+Hosting Site: https://friendlychat-a29c5.firebaseapp.com
+Dashboard: https://console.firebase.google.com/project/friendlychat-a29c5/overview
+
+Visit the URL above or run firebase open
+```
 
 ##10 Send Messages
 
