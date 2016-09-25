@@ -30,6 +30,14 @@ Clone the [GitHub repository](https://github.com/firebase/friendlychat) from the
 $ git clone https://github.com/firebase/friendlychat
 ```
 
+The firebase-codelabs repository contains sample projects for multiple platforms. This codelab only uses these two repositories:
+
+- ***web-start*** — The starting code that you'll build upon in this codelab.
+
+- ***web*** — The complete code for the finished sample app.
+
+Note: If you would like to run the finished app, you will still have to create a project in the Firebase console, see the ***Create a Firebase project and Setup your app*** section for instructions.
+
 ##3 Import the starter app
 
 
