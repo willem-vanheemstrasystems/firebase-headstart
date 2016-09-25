@@ -145,6 +145,28 @@ The app cannot do anything right now but with your help it will soon! We only ha
 
 ##7 User Sign-in
 
+###Initialize Firebase Auth
+
+The Firebase SDK should be ready to use since you have imported and initialized it in the ```index.html``` file. In this application we'll be using the [Firebase Realtime Database](https://firebase.google.com/docs/database), [Firebase Storage](https://firebase.google.com/docs/storage/) and [Firebase Authentication](https://firebase.google.com/docs/auth/). 
+
+Modify the ```FriendlyChat.prototype.initFirebase``` function in the ```scripts/main.js``` file so that it sets some shortcuts to the Firebase SDK features and initiates auth:
+
+```javascript
+// Sets up shortcuts to Firebase features and initiate firebase auth.
+FriendlyChat.prototype.initFirebase = function() {
+  // Shortcuts to Firebase SDK features.
+  this.auth = firebase.auth();
+  this.database = firebase.database();
+  this.storage = firebase.storage();
+  // Initiates Firebase auth and listen to auth state changes.
+  this.auth.onAuthStateChanged(this.onAuthStateChanged.bind(this));
+};
+```
+
+
+
+
+
 
 ##8 Read messages
 
