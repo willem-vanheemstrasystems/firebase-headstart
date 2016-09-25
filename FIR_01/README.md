@@ -380,6 +380,79 @@ FriendlyChat.prototype.saveMessage = function(e) {
 
 ##11 Send Images
 
+We'll now add a feature that shares images by uploading them to [Firebase Storage](https://firebase.google.com/docs/storage/). Firebase Storage is a file/blob database service.
+
+###Save images to Firebase Storage
+
+We have already added for you a button that triggers a file picker dialog. After selecting a file the ```FriendlyChat.prototype.saveImageMessage``` function is triggered and you can get a reference to the selected file. Now we'll add code that:
+
+- Creates a "placeholder" chat message with a temporary loading image into the chat feed.
+
+- Upload the file to Firebase Storage to the path: ```/<uid>/<timestamp>/<file_name>```
+
+- Update the chat message with the newly uploaded file's Firebase Storage URI in lieu of the temporary loading image.
+
+***Add*** the following at the bottom of the ```FriendlyChat.prototype.saveImageMessage``` function in scripts/main.js where the ```TODO``` is located:
+
+```javascript
+// Saves the a new message containing an image URI in Firebase.
+// This first saves the image in Firebase storage.
+FriendlyChat.prototype.saveImageMessage = function(event) {
+
+  ...
+
+  // Check if the user is signed-in
+  if (this.checkSignedInWithMessage()) {
+
+    // We add a message with a loading icon that will get updated with the shared image.
+    var currentUser = this.auth.currentUser;
+    this.messagesRef.push({
+      name: currentUser.displayName,
+      imageUrl: FriendlyChat.LOADING_IMAGE_URL,
+      photoUrl: currentUser.photoURL || '/images/profile_placeholder.png'
+    }).then(function(data) {
+
+      // Upload the image to Firebase Storage.
+      this.storage.ref(currentUser.uid + '/' + Date.now() + '/' + file.name)
+          .put(file, {contentType: file.type})
+          .then(function(snapshot) {
+            // Get the file's Storage URI and update the chat message placeholder.
+            var filePath = snapshot.metadata.fullPath;
+            data.update({imageUrl: this.storage.ref(filePath).toString()});
+          }.bind(this)).catch(function(error) {
+        console.error('There was an error uploading a file to Firebase Storage:', error);
+      });
+    }.bind(this));
+  }
+};
+```
+
+###Display images from Firebase Storage
+
+In the chat messages we saved the Firebase Storage reference of the images. These are of the form ```gs://<bucket>/<uid>/<timestamp>/<file_name>```. To display these images we need to query Firebase Storage for a URL.
+
+To do this replace the ```FriendlyChat.prototype.setImageUrl``` function content in scripts/main.js with:
+
+```javascript
+// Sets the URL of the given img element with the URL of the image stored in Firebase Storage.
+FriendlyChat.prototype.setImageUrl = function(imageUri, imgElement) {
+  // If the image is a Firebase Storage URI we fetch the URL.
+  if (imageUri.startsWith('gs://')) {
+    imgElement.src = FriendlyChat.LOADING_IMAGE_URL; // Display a loading image first.
+    this.storage.refFromURL(imageUri).getMetadata().then(function(metadata) {
+      imgElement.src = metadata.downloadURLs[0];
+    });
+  } else {
+    imgElement.src = imageUri;
+  }
+};
+```
+
+###Test Sending images
+
+1. Reload your app if it is still being served or run ```firebase serve``` on the command line to start serving the app from [http://localhost:5000](http://localhost:5000) then open it in your browser.
+
+2. After signing-in, click the image upload button and select an image file using the file picker, a new message should be visible in the app UI with your selected image.
 
 ##12 Storage Security Rules [Optional]
 
