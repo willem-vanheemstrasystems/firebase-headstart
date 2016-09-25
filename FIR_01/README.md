@@ -40,8 +40,12 @@ Note: If you would like to run the finished app, you will still have to create a
 
 ##3 Import the starter app
 
+Open the starter app:
+
+1. Using your IDE open or import the web-start directory from the sample code directory. This directory contains the starting code for the codelab which consists of a non functional UI.
 
 ##4 Create a Firebase project and Setup your app
+
 
 
 ##5 Install the Firebase Command Line Interface
