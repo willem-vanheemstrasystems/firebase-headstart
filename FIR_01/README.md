@@ -593,3 +593,24 @@ Then simply visit your web app hosted on Firebase Hosting on [https://<PROJECT_I
 The ***Hosting*** tab in the Firebase console will display useful information such as the history of your deploys with the ability to rollback to previous versions and the ability to setup a custom domain.
 
 ##14 Congratulations!
+
+You have used Firebase to easily build a real-time chat application.
+
+What we've covered
+
+- Authorizing Firebase
+
+- Firebase Realtime Database
+
+- Firebase Storage
+
+- Firebase Static Hosting
+
+Next Steps
+
+- Use Firebase in your own Web app.
+
+Learn More
+
+- [firebase.google.com](firebase.google.com)
+
