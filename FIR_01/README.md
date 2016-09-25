@@ -456,8 +456,140 @@ FriendlyChat.prototype.setImageUrl = function(imageUri, imgElement) {
 
 ##12 Storage Security Rules [Optional]
 
+###Set Storage Security Rules
+
+The Firebase Storage uses a specific [rules language](https://firebase.google.com/docs/storage/security/start) to define access rights, security and data validations.
+
+New Firebase projects are setup with default rules that only allow authenticated users to use Firebase Storage. You can view and modifies these rules in the ***Storage*** section of [Firebase console](https://firebase.google.com/console) under the ***RULES*** tab. You should be seeing the default rules: 
+
+```javascript
+service firebase.storage {
+  match /b/<PROJECT_ID>.appspot.com/o {
+    match /{allPaths=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
+```
+
+This rule allow any signed-in user to read and write any files in your Storage bucket.
+
+Update the rules to the following which only allows users to write to their own folder (don't forget to replace the ```<PROJECT_ID>``` placeholder, e.g. friendlychat-a29c5):
+
+```javascript
+service firebase.storage {
+  match /b/<PROJECT_ID>.appspot.com/o {
+    match /{userId}/{timeStamp}/{fileName} {
+      allow write: if request.auth.uid == userId;
+      allow read;
+    }
+  }
+}
+```
+
+The ```request.auth``` rule variable is a special variable containing information about the user if authenticated. More information can be found in [the documentation](https://firebase.google.com/docs/storage/security/start).
+
+You can update these rules manually directly in the Firebase console. Alternatively you can write these rules in a file and apply them to your project using the CLI:
+
+- Save the rules shown above in a file named ```storage.rules```
+
+- In your ```firebase.json``` file, add a ```storage.rules``` attribute pointing to a JSON file containing the rules shown above.
+
+```javascript
+{
+  // If you went through the "Realtime Database Security Rules" step.
+  "database": {
+    "rules": "database-rules.json"
+  },
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "database-rules.json",
+      "storage.rules"
+    ]
+  }
+}
+```
+
+###Deploy Storage Security Rules
+
+You can then deploy these rules with the Firebase CLI using:
+
+```javascript
+=== Deploying to 'friendlychat-a29c5'...
+
+i  deploying database, storage, hosting
++  database: rules ready to deploy.
+i  storage: checking rules for compilation errors...
++  storage: rules file compiled successfully
+i  hosting: preparing ./ directory for upload...
++  hosting: ./ folder uploaded successfully
++  hosting: 8 files uploaded successfully
+i  starting release process (may take several minutes)...
+
++  Deploy complete!
+
+Hosting Site: https://friendlychat-a29c5.firebaseapp.com
+Dashboard: https://console.firebase.google.com/project/friendlychat-a29c5/overview
+
+Visit the URL above or run firebase open
+```
 
 ##13 Deploy your app using Firebase static hosting
 
+Firebase comes with a [hosting service](https://firebase.google.com/docs/hosting/) that will serve your static assets/web app. You deploy your files to Firebase Hosting using the Firebase CLI. Before deploying you need to specify which files will be deployed in your ```firebase.json``` file. We have already done this for you because this is also required to serve the file locally with ```firebase serve```. These settings are specified under the ```hosting``` attribute:
+
+```javascript
+{
+  // If you went through the "Realtime Database Security Rules" step.
+  "database": {
+    "rules": "database-rules.json"
+  },
+  // If you went through the "Storage Security Rules" step.
+  "storage": {
+    "rules": "storage.rules"
+  },
+  "hosting": {
+    "public": "./",
+    "ignore": [
+      "firebase.json",
+      "database-rules.json",
+      "storage.rules"
+    ]
+  }
+}
+```
+
+This will tell the CLI that we want to deploy all files in the current directory (```"public": "./"```) with the exception of the files listed in the ```ignore``` array.
+
+Now deploy your files to Firebase static hosting by running ```firebase deploy```:
+
+```javascript
+=== Deploying to 'friendlychat-a29c5'...
+
+i  deploying database, storage, hosting
++  database: rules ready to deploy.
+i  storage: checking rules for compilation errors...
++  storage: rules file compiled successfully
+i  hosting: preparing ./ directory for upload...
++  hosting: ./ folder uploaded successfully
++  hosting: 8 files uploaded successfully
+i  starting release process (may take several minutes)...
+
++  Deploy complete!
+
+Hosting Site: https://friendlychat-a29c5.firebaseapp.com
+Dashboard: https://console.firebase.google.com/project/friendlychat-a29c5/overview
+
+Visit the URL above or run firebase open
+```
+
+Then simply visit your web app hosted on Firebase Hosting on [https://<PROJECT_ID>.firebaseapp.com](https://friendlychat-a29c5.firebaseapp.com) or by running ```firebase open```.
+
+The ***Hosting*** tab in the Firebase console will display useful information such as the history of your deploys with the ability to rollback to previous versions and the ability to setup a custom domain.
 
 ##14 Congratulations!
