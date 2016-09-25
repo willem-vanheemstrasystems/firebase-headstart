@@ -119,13 +119,13 @@ Make sure the Firebase version is 3.x.x. If this reads 2.x.x you still have an o
 Authorize the Firebase CLI by running:
 
 ```javascript
-$~> firebase login
+$~> firebase login --interactive
 ```
 
 Make sure you are in the ```web-start``` directory then set up the Firebase CLI to use your Firebase Project:
 
 ```javascript
-$~> firebase use --add
+$~> firebase use --add --interactive
 ```
 
 Then select your Project ID and follow the instructions.
