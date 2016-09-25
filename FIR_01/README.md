@@ -4,9 +4,31 @@ Based on 'Firebase: Build a Real Time Web Chat App - Friendly Chat' at https://c
 
 ##1 Overview
 
+In this codelab, you'll learn how to use the Firebase platform to easily create Web applications and you will implement and deploy a chat client using Firebase.
+
+***What you'll learn***
+
+- Sync data using the Firebase Realtime Database and Firebase Storage.
+
+- Authenticate your users using Firebase Auth.
+
+- Deploy your web app on Firebase static hosting.
+
+***What you'll need***
+
+- The IDE/text editor of your choice such as [WebStorm](https://www.jetbrains.com/webstorm), [Atom](https://atom.io/) or [Sublime](https://www.sublimetext.com/)
+
+- The sample code.
+
+- A browser such as Chrome.
 
 ##2 Get the sample code
 
+Clone the [GitHub repository](https://github.com/firebase/friendlychat) from the command line:
+
+```javascript
+$ git clone https://github.com/firebase/friendlychat
+```
 
 ##3 Import the starter app
 
