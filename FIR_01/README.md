@@ -163,7 +163,18 @@ FriendlyChat.prototype.initFirebase = function() {
 };
 ```
 
+###Authorize Firebase with Google
 
+When the user clicks the ***Sign in with Google*** button the ```FriendlyChat.prototype.signIn``` function gets triggered (we already set that up for you!). At this point we want to authorize Firebase using Google as the Identity Provider. We'll sign in using a popup ([Several other methods](https://firebase.google.com/docs/auth/web/google-signin) are available). Change the ```FriendlyChat.prototype.signIn``` function with:
+
+```javascript
+// Signs-in Friendly Chat.
+FriendlyChat.prototype.signIn = function() {
+  // Sign in Firebase using popup auth and Google as the identity provider.
+  var provider = new firebase.auth.GoogleAuthProvider();
+  this.auth.signInWithPopup(provider);
+};
+```
 
 
 
