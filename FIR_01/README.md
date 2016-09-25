@@ -176,6 +176,41 @@ FriendlyChat.prototype.signIn = function() {
 };
 ```
 
+The ```FriendlyChat.prototype.signOut``` function is triggered when the user clicks the ```Sign out``` button. Add the following line to make sure we sign out of Firebase:
+
+```javascript
+// Signs-out of Friendly Chat.
+FriendlyChat.prototype.signOut = function() {
+  // Sign out of Firebase.
+  this.auth.signOut();
+};
+```
+
+We want to display the signed-in user's profile pic and name in the top bar. Earlier we've set up the ```FriendlyChat.prototype.onAuthStateChanged``` function to trigger when the auth state changes. This function gets passed a Firebase ```User``` object when triggered. Change the two lines with a ```TODO``` to read the user's profile pic and name:
+
+```javascript
+// Triggers when the auth state change for instance when the user signs-in or signs-out.
+FriendlyChat.prototype.onAuthStateChanged = function(user) {
+  if (user) { // User is signed in!
+    // Get profile pic and user's name from the Firebase user object.
+    var profilePicUrl = user.photoURL; // Only change these two lines!
+    var userName = user.displayName;   // Only change these two lines!
+
+    ...
+```
+
+We display an error message if the users tries to send messages when the user is not signed-in. To detect if the user is actually signed-in ***add*** these few lines to the top of the ```FriendlyChat.prototype.checkSignedInWithMessage``` function where the ```TODO``` is located:
+
+```javascript
+// Returns true if user is signed-in. Otherwise false and displays a message.
+FriendlyChat.prototype.checkSignedInWithMessage = function() {
+  // Return true if the user is signed in Firebase
+  if (this.auth.currentUser) {
+    return true;
+  }
+
+  ...
+```
 
 
 
