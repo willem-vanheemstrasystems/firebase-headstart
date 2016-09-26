@@ -28,8 +28,11 @@ In order to understand the problem, we will define the data schema we want to im
 ###Properties or fields for Entities
 
 | User | Group | Update |
+
 | username | group_name | update_text |
+
 | full_name | group_description | created_at |
+
 | created_at | no_of_users | sent_by |
 
 ##Relations or Entity Relationship Diagram
