@@ -33,15 +33,6 @@ In order to understand the problem, we will define the data schema we want to im
 | full_name  | group_description | created_at  |
 | created_at | no_of_users       | sent_by     |
 
-
-| Left-Aligned  | Center Aligned  | Right Aligned |
-| :------------ |:---------------:| -----:|
-| col 3 is      | some wordy text | $1600 |
-| col 2 is      | centered        |   $12 |
-| zebra stripes | are neat        |    $1 |
-
-
-
 ##Relations or Entity Relationship Diagram
 
 ##Maintaining Relations in the SQL DBMS
