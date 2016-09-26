@@ -35,9 +35,87 @@ In order to understand the problem, we will define the data schema we want to im
 
 ##Relations or Entity Relationship Diagram
 
+Requirement for Schema Relations:
+
+1. Any user can be a part of a group.
+
+2. Any group can include multiple users.
+
+3. An update can be targeted for a single user or a particular group.
+
 ##Maintaining Relations in the SQL DBMS
 
+We know that in order to implement relations in a SQL database we would need to create extra tables like 'user_belong_to_groups' with reference to user's primary key 'userid' and group's primary key 'groupid'. This table is very helpful during data retrieval because of SQL joins but in firebase you do not have joins.
+
 #Maintaining Relations in Firebase
+
+In Firebase we cannot use extra objects like 'user_belong_to_groups' to store the many to many relations, because Firebase does not have any query language or any kind of joins.
+
+The next thought in our mind comes that we can nest data & objects. For example, I can have a Group object which can have a property users consisting an array of users and each user can have an array of updates. The data will look like something given below:
+
+```javascript
+// JSON Structure for Data which has nested Objects
+"data":{
+  "groups":{
+     "group1"{
+            "group_name":"Administrators",
+            "group_description":"Users who can do anything!",
+            "no_of_users":2,
+            "users":{
+                "user1": {
+                    "username":"john",
+                    "full_name":"John Vincent",
+                    "created_at":"9th Feb 2015",
+                    "updates": {
+                            "update1":{
+                                "update_text":"New feature launched!",
+                                "created_at":"13th Feb 2015",
+                                "sent_by":"user2"
+                        }
+                    }
+                },
+                "user2": {
+                    "username":"chris",
+                    "full_name":"Chris Mathews",
+                    "created_at":"11th Feb 2015"
+                }
+            }
+        },
+     "group2"{
+            "group_name":"Moderators",
+            "group_description":"Users who can only moderate!",
+            "no_of_users":1,
+            "users":{
+                "user1": {
+                    "username":"john",
+                    "full_name":"John Vincent",
+                    "created_at":"9th Feb 2015"
+                }
+            },
+            ,
+            "updates": {
+                    "update2":{
+                        "update_text":"Users should expect blackout tomorrow!",
+                        "created_at":"19th Feb 2015",
+                        "sent_by":"user1"
+                }
+            }
+        }
+    }
+}
+```
+
+The problems with the above structure can be well analysed when you have a close look on the data. The issues with this type of structure for your data are
+
+1. If the same user belongs to 2 groups we have to duplicate the complete user object which creates redundancy of data.
+
+2. Accessing any user object directly using userid will be an issue.
+
+3. It is very cumbersome to find all the groups a user belongs to.
+
+4. We have to create duplicate updates for showing it to multiple recipients.
+
+5. We cannot set proper permissions in this kind of structure.
 
 ##Solving the Problem
 
